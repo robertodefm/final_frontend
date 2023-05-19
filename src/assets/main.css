@@ -1,0 +1,183 @@
+/* @import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(160, 100%, 37%, 1);
+  transition: 0.4s;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(160, 100%, 37%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+} */
+
+:root{
+  --bg-color-principal: white;
+  --text-color-principal: black;
+  --bg-color-principal-dark:black;
+  --text-color-principal-dark:white;
+
+  
+}
+
+body{
+  border: solid;
+  border-top: 0;
+  border-bottom: 0;
+  font-family: 'MuseoModerno', cursive;
+}
+
+.color{
+  background-color: var(--bg-color-principal);
+  color: var(--text-color-principal);
+}
+
+.img-principal{
+  background-image: url(https://img.freepik.com/free-photo/cool-futuristic-illustration-with-bright-disco-ball-center_181624-11622.jpg?w=1380&t=st=1674560806~exp=1674561406~hmac=6e6f3e0710409fe87a70917f33f0258357ab316ff3a427d870e3f6879e389f4d);
+  width: 100%;
+  height: 550px;
+  background-size:cover;
+  background-repeat: no-repeat;
+  color: white;
+  
+
+}
+
+.img-principal h1{
+  font-family: 'Libre Barcode 39 Text', cursive;
+  font-size: 100px
+}
+section{
+  margin-top: 2em;
+}
+
+section p{
+  text-align: center;
+  padding-inline: 1em;
+}
+
+
+.gal{
+  margin-inline: auto;
+  gap: 1em;
+  margin-top: 1em;
+}
+
+.img1{
+  background-image: url(https://img.freepik.com/free-photo/cold-blue-cocktail-with-disco-ball_144627-24454.jpg?w=1380&t=st=1674560780~exp=1674561380~hmac=e077f9c37b7f0a4b3ffc02d735e12cd01cac59afda420feb72b7d2c8e3c1516f);
+  width: 200px;
+  height: 200px;
+  background-size:cover;
+  background-repeat: no-repeat;
+  
+  color: white;
+}
+.img2{
+  background-image: url(https://img.freepik.com/free-photo/people-celebrating-party_53876-14410.jpg?w=1380&t=st=1674561682~exp=1674562282~hmac=598bc27e0cf882b756ba4f8187af5f77da82e7d04c4c74e31e97a9e38266cb39);
+  width: 200px;
+  height: 200px;
+  background-size:cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+}
+
+.img3{
+  background-image: url(https://img.freepik.com/free-photo/dj-party_74658-146.jpg?w=1380&t=st=1674561624~exp=1674562224~hmac=d3229fe42f8e7c500f199d612c987b4a08793c13ada600abc2e146363585e41f);
+  width: 200px;
+  height: 200px;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+
+.img4{
+  background-image: url(https://img.freepik.com/free-photo/friends-celebrating-with-confetti_23-2147644244.jpg?w=1380&t=st=1674561670~exp=1674562270~hmac=a2e6068ea05991a19f9a23b4f9d0ac664ab2cfb03c20e42baf31f10702c86963);
+  width: 200px;
+  height: 200px;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+
+.img5{
+  background-image: url(https://img.freepik.com/free-photo/back-view-audience-with-arms-raised-front-stage-music-concert_637285-640.jpg?w=1380&t=st=1674561572~exp=1674562172~hmac=445072c259011064b43ef53ea3d7f2859c22f1074de648eb160793ef7f9fc4e4);
+  width: 200px;
+  height: 200px;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+
+.img6{
+  background-image: url(https://img.freepik.com/free-photo/friends-clinking-drink-glasses-modern-bar_1150-18971.jpg?w=1380&t=st=1674561632~exp=1674562232~hmac=23d52901a933ba1350fbe836526878465e8887f0c330e7ff91c19ebe534666fd);
+  width: 200px;
+  height: 200px;
+  background-size:cover;
+  background-repeat: no-repeat;
+  background-position: center;
+  color: white;
+}
+
+.erro{
+  height: 98vh;
+  border: none;
+}
+.card-img-top{
+  height: 300px;
+  
+}
+.lead{
+  margin-top: 3em;
+}
+.card-cocktail{
+  width: 300px;
+  border: none !important;
+}
+.ingredient{
+  width: 150px;
+  height: 150px;
+}
+:root:has(#oscuro:checked){
+  --bg-color-principal: black;
+  --text-color-principal: white;
+  --bg-color-principal-dark:white;
+  --text-color-principal-dark:black;
+  
+}
+
+@media (max-width: 700px){
+  .cocktail-indiv{
+      flex-direction: column;
+  }
+  .gal{
+      flex-direction: column;
+  }
+}
+
