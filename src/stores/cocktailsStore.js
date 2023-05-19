@@ -15,7 +15,18 @@ export const useCocktailsStore = defineStore('cocktails', {
   state: () => {
     return{
 
-      cocktailId: 0
+      cocktailId: 0,
+      selectCocktail:null
     }
+  }, actions:{
+    
+    getCocktail: () => {
+       
+     fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + this.cocktailId)
+         .then(data => data.json())
+         .then(res => res.drinks)
+         .then(final => this.selectCocktail = final.map(dados => dados))
+      
   }
+}
 })

@@ -1,7 +1,7 @@
 <template >
         <section class="d-flex flex-column justify-content-center align-items-center color">
     
-    <h2 class="mt-3">Moscow Mule</h2>
+    <h2 class="mt-3">{{ selectCocktail.strDrink }}</h2>
     <div class="d-flex mt-5 color  cocktail-indiv">
 
         <div class="card h-100 color border card-cocktail color">
@@ -29,3 +29,20 @@
 
 </section>
 </template>
+
+<script setup>
+import { ref, onMounted } from 'vue'
+import { useCocktailsStore } from '@/stores/cocktailsStore.js'
+
+const cocktailsStore = useCocktailsStore()
+const selectCocktail = ref([])
+
+
+
+onMounted(()=>{
+  fetch('www.thecocktaildb.com/api/json/v1/1/lookup.php?i=' + cocktailsStore.cocktailId)
+        .then(data => data.json())
+        .then(res => res.drinks)
+        .then(final => selectCocktail.value = final.map(dados => dados))
+});
+</script>
