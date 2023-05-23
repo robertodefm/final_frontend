@@ -44,8 +44,8 @@ import { RouterLink, RouterView } from 'vue-router'
 
             <button class="g-col-6 btn  btn-dark" type="button" data-bs-toggle="modal"
               data-bs-target="#exampleModal">Login</button>
-            <button class=" g-col-6 btn  btn-light" type="button"
-              onclick="location.href='register.html'">Register</button>
+            
+              <RouterLink to="/register" class="g-col-6 btn  btn-light">Register</RouterLink>
             <button class=" g-col-6 btn fs-4 color" type="button" onclick="location.href='compras.html'"><i
                 class="fa-solid fa-cart-shopping"></i></button>
           </form>
