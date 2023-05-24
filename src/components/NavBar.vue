@@ -26,10 +26,10 @@
                             <fieldset>
                                 <legend></legend>
                                 <label for="tema">Claro</label>
-                                <input checked type="radio" name="tema" id="claro">
+                                <input checked type="radio" name="tema" id="claro" @change="toggleDarkMode(false)">
                                 &emsp;
                                 <label for="tema">Oscuro</label>
-                                <input type="radio" name="tema" id="oscuro">
+                                <input type="radio" name="tema" id="oscuro" @change="toggleDarkMode(true)">
                             </fieldset>
                         </form>
                     </li>
@@ -59,6 +59,13 @@ import { ref, onMounted } from 'vue';
 import { onAuthStateChanged } from 'firebase/auth';
 import { getAuth } from 'firebase/auth';
 import { useRouter } from 'vue-router';
+import { useUserStore } from '@/stores/usersStore.js'
+
+const userStore = useUserStore()
+
+const toggleDarkMode = (darkMode) => {
+      userStore.toggleDarkMode(darkMode)
+    }
 
 const router = useRouter();
 
@@ -77,8 +84,10 @@ onMounted(() => {
   onAuthStateChanged(auth, (currentUser) => {
     if (currentUser) {
       user.value = currentUser;
+      userStore.login(currentUser);
     } else {
       user.value = null;
+      userStore.logout();
     }
   });
 });

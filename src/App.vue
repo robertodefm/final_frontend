@@ -1,12 +1,5 @@
-<script setup>
-import { RouterLink, RouterView } from 'vue-router'
-import Login from '@/components/Login.vue'
-import NavBar from '@/components/NavBar.vue'
-
-</script>
-
 <template>
-  <div class="container color">
+  <div class="container color" :class="{ 'dark-mode': userStore.isDarkMode }">
     <NavBar />
     <RouterView />
 
@@ -123,3 +116,13 @@ import NavBar from '@/components/NavBar.vue'
     <Login />
   </div>
 </template>
+
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import Login from '@/components/Login.vue'
+import NavBar from '@/components/NavBar.vue'
+import { useUserStore } from '@/stores/usersStore.js'
+
+const userStore = useUserStore()
+
+</script>
