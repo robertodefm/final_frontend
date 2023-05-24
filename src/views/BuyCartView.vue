@@ -114,8 +114,9 @@ export default {
         });
 
         const cartTotal = computed(() => {
-            return cartItems.value.reduce((total, item) => total + parseFloat(item.price), 0);
+            return cartItems.value.reduce((total, item) => total + parseFloat(item.price) * item.quantity, 0);
         });
+
 
         const removeFromCart = (item) => {
             cartStore.removeFromCart(item);
