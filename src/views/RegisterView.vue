@@ -11,18 +11,18 @@
 
                                 <form id="signupForm" class="mx-1 mx-md-4" @submit.prevent="">
 
-                                    <div class="d-flex flex-row align-items-center mb-4">
+                                    <!-- <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-user fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="text" class="form-control" v-model="data.name" required/>
+                                            <input type="text" class="form-control" v-model="name" required/>
                                             <label class="form-label" for="text">Your Name</label>
                                         </div>
-                                    </div>
+                                    </div> -->
 
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="email" class="form-control" v-model="data.email" required />
+                                            <input type="email" class="form-control" v-model="email" required autocomplete="email"/>
                                             <label class="form-label" for="email">Your Email</label>
                                         </div>
                                     </div>
@@ -30,14 +30,14 @@
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-lock fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
-                                            <input type="password" class="form-control" v-model="data.password" required />
+                                            <input type="password" class="form-control" v-model="password" required autocomplete="current-password"/>
                                             <label class="form-label" for="password">Password</label>
                                         </div>
                                     </div>
 
 
                                     <div class="form-check d-flex justify-content-center mb-5">
-                                        <input class="form-check-input me-2" type="checkbox" value="" id="form2Example3c" required/>
+                                        <input class="form-check-input me-2" type="checkbox" value="" v-model="check" required/>
                                         <label class="form-check-label" for="form2Example3">
                                             I agree all statements in <a href="#!">Terms of service</a>
                                         </label>
@@ -64,23 +64,71 @@
     </div>
 </template>
 
-<script setup>
-import {reactive} from 'vue'
-import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.21.0/firebase-auth.js"
-import { auth } from '../firebase.js'
 
-const data = reactive({
-    name:'',
-    email:'',
-    password:''
-})
+
+<script setup>
+import { ref } from 'vue';
+import { auth } from '../firebase.js';
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { useRouter } from 'vue-router';
+// import { signOut } from "firebase/auth";
+
+const router = useRouter();
+
+const name = ref('');
+const email = ref('');
+const password = ref('');
+const check = ref(false)
+
 
 const handleRegister = async () => {
-  try {
-    const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password)
-    console.log(userCredential)
-  } catch (error) {
-    console.log(error)
-  }
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email.value, password.value);
+        console.log(userCredential);
+        resetData();
+        alert('Welcome!')
+        router.push({name:'home'})
+        
+    } catch (error) {
+        if (error.code== 'auth/invalid-email'){
+        alert('Invalid email')
+    }else if (error.code == 'auth/email-already-in-use'){
+        alert('Email already in use')
+    }else if (error.code == 'auth/weak-password'){
+        alert('Password should be at least 6 characters')
+    }else if (error.code){
+        alert('Something went wrong')
+    }
 }
+};
+
+const resetData = () => {
+    name.value = '';
+    email.value = '';
+    password.value = '';
+    check.value=false;
+};
+
+// const loggedOutLinks = document.querySelectorAll('.logged-out')
+// const loggedInLinks =document.querySelectorAll('.logged-out')
+
+
+//  const loginCheck = user =>{
+//     if (user) {
+//         loggedOutLinks.forEach(links => links.style.display='none')
+//     } else {
+
+//     }
+// }
+
+
+// const logout = document.querySelector('#logout')
+
+
+// logout.addEventListener('click',  async() =>{
+  
+//     await signOut(auth)
+//     console.log('ok')
+// })
+
 </script>

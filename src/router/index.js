@@ -6,6 +6,7 @@ import CocktailView from '@/views/CocktailView.vue'
 import CommentsView from '@/views/CommentsView.vue'
 import ErroView from '@/views/ErroView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import { auth } from '../firebase.js';
 
 
 const router = createRouter({
@@ -24,7 +25,10 @@ const router = createRouter({
     {
       path: '/buycart',
       name: 'buycart',
-      component: BuyCartView
+      component: BuyCartView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/cocktail',
@@ -52,6 +56,21 @@ const router = createRouter({
       component: ErroView
     }
   ]
+});
+
+router.beforeEach((to,from,next) => {
+  if (to.matched.some(route => route.meta.requiresAuth)) {
+    const user = auth.currentUser;
+    if (user){
+      next()
+    } else {
+      next({
+        name: 'register'
+      })
+    }
+  }else {
+    next();
+  }
 })
 
 export default router
