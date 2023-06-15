@@ -28,7 +28,6 @@
 
 <script>
 import { useCocktailsStore } from '@/stores/cocktailsStore';
-import { useCartStore } from '@/stores/cartStore';
 import { computed } from 'vue';
 import { useRouter, RouterLink } from 'vue-router'
 
@@ -37,7 +36,7 @@ export default {
   name: 'CocktailView',
   setup() {
     const cocktailsStore = useCocktailsStore();
-    const cartStore = useCartStore();
+    
     
     const filteredIngredients = computed(() => {
       return Object.entries(cocktailsStore.selectedCocktail)
@@ -56,24 +55,11 @@ export default {
       return `https://www.thecocktaildb.com/images/ingredients/${ingredientName}-Small.png`;
     };
 
-    const addToCart = (cocktail) => {
-      
-      const cartItem = {
-        id: cocktail.idDrink,
-        name: cocktail.strDrink,
-        image: cocktail.strDrinkThumb,
-        quantity: 1,
-      };
-
-      cartStore.addToCart(cartItem);
-      router.push('/buycart');
-    };
 
     return {
       cocktail: cocktailsStore,
       filteredIngredients,
-      getIngredientImage,
-      addToCart,
+      getIngredientImage
     };
   },
 };

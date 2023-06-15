@@ -1,7 +1,7 @@
 <template>
     <nav class="navbar navbar-expand-lg color">
         <div class="container-fluid ">
-            <RouterLink to="/" class="navbar-brand fs-3 fw-bold color">KOI</RouterLink>
+            <RouterLink to="/" class="navbar-brand fs-3 fw-bold color">LC</RouterLink>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarTogglerDemo02"
                 aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,8 +46,7 @@
                     </div>
 
 
-                    <RouterLink to="/buycart" class="g-col-6 btn fs-4 color"><i class="fa-solid fa-cart-shopping"></i>
-                    </RouterLink>
+                
                 </form>
             </div>
         </div>

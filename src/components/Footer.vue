@@ -37,10 +37,10 @@
       <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
 
         <h6 class="text-uppercase fw-bold mb-4">
-          <i class="fas fa-gem me-3 color"></i>KOI Disco Bar
+          <i class="fas fa-gem me-3 color"></i>leaf Calculator
         </h6>
         <p>
-          COME AND EXPERIENCE A NIGHT YOU WON'T FORGET
+          SAVE THE PLANET!
         </p>
       </div>
 
@@ -94,7 +94,7 @@
         <p><i class="fas fa-home me-3 color"></i> Madeira, Portugal</p>
         <p>
           <i class="fas fa-envelope me-3 color"></i>
-          koidiscobar@gmail.com
+          leafcalculator@gmail.com
         </p>
         <p><i class="fas fa-phone me-3 color"></i> + 01 234 567 88</p>
         <p><i class="fas fa-print me-3 color"></i> + 01 234 567 89</p>

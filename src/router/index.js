@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SearchView from '@/views/SearchView.vue'
-import BuyCartView from '@/views/BuyCartView.vue'
 import CocktailView from '@/views/CocktailView.vue'
 import CommentsView from '@/views/CommentsView.vue'
 import ErroView from '@/views/ErroView.vue'
@@ -21,14 +20,6 @@ const router = createRouter({
       path: '/search',
       name: 'search',
       component: SearchView
-    },
-    {
-      path: '/buycart',
-      name: 'buycart',
-      component: BuyCartView,
-      meta: {
-        requiresAuth: true
-      }
     },
     {
       path: '/cocktail',
