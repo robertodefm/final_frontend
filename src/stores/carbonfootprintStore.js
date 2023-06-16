@@ -1,16 +1,27 @@
-import { defineStore } from 'pinia';
+import { defineStore } from 'pinia'
 
-export const useCarbonFootprintStore = defineStore('carbonfootprint', {
+
+export const useCarbonFootprintStore = defineStore('carbonfootprint',{
   state: () => ({
-    user: null,
-    calculos: [],
+    result: null, // Último resultado de la calculadora de huella de carbono
+    history: [], // Historial de resultados
   }),
+  getters: {
+    getResult: (state) => state.result,
+    getHistory: (state) => state.history,
+  },
   actions: {
-    guardarCalculo(calculo) {
-      this.calculos.push(calculo);
+    setResult(result) {
+      this.result = result
     },
-    limpiarCalculos() {
-      this.calculos = [];
+    addToHistory(email) {
+      // const { email } = user.email
+      const newResult = {
+        email,
+        result: this.result,
+      }
+    
+      this.history.push(newResult)
     },
   },
-});
+})

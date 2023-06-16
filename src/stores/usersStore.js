@@ -7,7 +7,10 @@ export const useUserStore = defineStore('user', {
   }),
   getters: {
     isLoggedIn: state => state.user !== null,
-    isDarkMode: state => state.darkMode 
+    isDarkMode: state => state.darkMode,
+    getEmail: (state) => {
+      return state.user ? state.user.email : null;
+    } 
   },
   actions: {
     login(user) {

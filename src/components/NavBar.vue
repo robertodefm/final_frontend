@@ -21,6 +21,11 @@
                     <li class="nav-item ">
                         <RouterLink to="/erro" class="nav-link color">Error</RouterLink>
                     </li>
+                    <li>
+
+                        <RouterLink to="/calculator" class="nav-link color">Calculator
+                        </RouterLink>
+                    </li>
                     <li class="ms-5 fs-6 border ">
                         <form action="" class="darkmode">
                             <fieldset>

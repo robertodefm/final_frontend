@@ -27,7 +27,7 @@
         <div v-if="resultado !== null" class="resultado">
             <h3 class="resultado-titulo">Sua pegada de carbono é:</h3>
             <p class="resultado-valor">{{ resultado }} kg CO2/ano</p>
-            <button @click="guardarCalculo" class="btn btn-success mt-4">Guardar Cálculo</button>
+            <button @click="saveResultToHistory">Guardar resultado en historial</button>
         </div>
     </div>
 </template>
@@ -75,11 +75,22 @@
   
 <script>
 import { ref } from 'vue';
-import { useStore } from 'pinia';
+import { useCarbonFootprintStore } from '@/stores/carbonFootprintStore.js'
+import { useUserStore } from '@/stores/usersStore.js'
 
 export default {
     setup() {
-        const store = useStore('carbonfootprintStore')
+
+        const carbonFootprintStore = useCarbonFootprintStore()
+        const userStore = useUserStore()
+
+        const saveResultToHistory = () => {
+            const user = userStore.getUser // objeto del usuario logueado desde la store user
+            const result = resultado /*  resultado de la calculadora de huella de carbono */
+            const userEmail = userStore.$state.user.email;
+                carbonFootprintStore.setResult(result)
+            carbonFootprintStore.addToHistory(userEmail)
+        }
         const perguntas = ref([
             { id: 'tv', texto: 'TVs', imagem: 'https://img.freepik.com/vector-gratis/television-vintage_23-2147503075.jpg?w=740&t=st=1686869366~exp=1686869966~hmac=61c37647d50baae3d8d4371533e8d1fa1079d70bbcf52c524450a9a4da58017d', pegadaCarbonoAnual: 35 },
             { id: 'computadores', texto: 'Computadores', imagem: 'https://img.freepik.com/vector-gratis/videoconferencia-trabajo-remoto-ilustracion-pantalla-plana-portatil-grupo-colegas-personas-conectadas_88138-548.jpg?size=626&ext=jpg&ga=GA1.2.795727531.1686753706&semt=sph', pegadaCarbonoAnual: 180 },
@@ -105,24 +116,23 @@ export default {
                     }
                 }
             }
+            if (respostas.value.transporte === 'carro') {
+                total += 2300;
+            } else if (respostas.value.transporte === 'moto') {
+                total += 1000;
+            }
 
             resultado.value = total.toFixed(2);
+
         };
 
-        const guardarCalculo = () => {
-            const usuario = store.user;
-            const calculo = {
-                usuario,
-                resultado: resultado.value,
-            };
-            store.guardarCalculo(calculo);
-        };
+
         return {
             perguntas,
             respostas,
             resultado,
             calcularPegadaCarbono,
-            guardarCalculo
+            saveResultToHistory
         };
     },
 };

@@ -45,7 +45,10 @@ const router = createRouter({
     {
       path: '/calculator',
       name: 'calculator',
-      component: CalculatorView
+      component: CalculatorView,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/:pathMatch(.*)',

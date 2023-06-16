@@ -11,14 +11,6 @@
 
                                 <form id="signupForm" class="mx-1 mx-md-4" @submit.prevent="">
 
-                                    <!-- <div class="d-flex flex-row align-items-center mb-4">
-                                        <i class="fas fa-user fa-lg me-3 fa-fw"></i>
-                                        <div class="form-outline flex-fill mb-0">
-                                            <input type="text" class="form-control" v-model="name" required/>
-                                            <label class="form-label" for="text">Your Name</label>
-                                        </div>
-                                    </div> -->
-
                                     <div class="d-flex flex-row align-items-center mb-4">
                                         <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
                                         <div class="form-outline flex-fill mb-0">
@@ -71,7 +63,7 @@ import { ref } from 'vue';
 import { auth } from '../firebase.js';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { useRouter } from 'vue-router';
-// import { signOut } from "firebase/auth";
+
 
 const router = useRouter();
 
@@ -109,26 +101,6 @@ const resetData = () => {
     check.value=false;
 };
 
-// const loggedOutLinks = document.querySelectorAll('.logged-out')
-// const loggedInLinks =document.querySelectorAll('.logged-out')
 
-
-//  const loginCheck = user =>{
-//     if (user) {
-//         loggedOutLinks.forEach(links => links.style.display='none')
-//     } else {
-
-//     }
-// }
-
-
-// const logout = document.querySelector('#logout')
-
-
-// logout.addEventListener('click',  async() =>{
-  
-//     await signOut(auth)
-//     console.log('ok')
-// })
 
 </script>

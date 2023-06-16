@@ -53,7 +53,7 @@
       const signupModal = document.querySelector('#exampleModal')
       const modal = bootstrap.Modal.getInstance(signupModal)
       modal.hide()
-      router.push({ name: 'buycart' });
+      router.push({ name: 'calculator' });
     } catch (error) {
         if (error.code == 'auth/invalid-email') {
             alert('Invalid email')
