@@ -23,11 +23,14 @@
                 <option value="transporte_publico">Transporte público</option>
             </select>
         </div>
-        <button @click="calcularPegadaCarbono" class="btn btn-primary mt-4">Calcular</button>
-        <div v-if="resultado !== null" class="resultado">
-            <h3 class="resultado-titulo">Sua pegada de carbono é:</h3>
+        <button @click="calcularPegadaCarbono" class="btn btn-success mt-4">Calcular</button>
+        <div v-if="resultado !== null" class="resultado d-flex flex-column align-items-center">
+            <h3 class="resultado-titulo ">Sua pegada de carbono é:</h3>
             <p class="resultado-valor">{{ resultado }} kg CO2/ano</p>
-            <button @click="saveResultToHistory">Guardar resultado en historial</button>
+            <p class="resultado-titulo">Recomendaçao: <br> {{ message }}</p>
+            <button @click="saveResultToHistory" class="btn btn-success mt-4">Guardar resultado en historial</button>
+            <button @click="resetTest" class="btn btn-success mt-4">Reiniciar TEST</button>
+            
         </div>
     </div>
 </template>
@@ -77,19 +80,46 @@
 import { ref } from 'vue';
 import { useCarbonFootprintStore } from '@/stores/carbonFootprintStore.js'
 import { useUserStore } from '@/stores/usersStore.js'
+import axiosInstance from '/api.js';
 
 export default {
     setup() {
 
         const carbonFootprintStore = useCarbonFootprintStore()
         const userStore = useUserStore()
+        
+        const resetTest = () =>{
+            respostas.value = {};
+        resultado.value = null;
+        message.value = getRandomMessage();
+        randomIndex.value = generateRandomIndex(randomIndex.value);
+      message.value = messages[randomIndex.value];
+        }
 
         const saveResultToHistory = () => {
             const user = userStore.getUser // objeto del usuario logueado desde la store user
             const result = resultado /*  resultado de la calculadora de huella de carbono */
+            
             const userEmail = userStore.$state.user.email;
-                carbonFootprintStore.setResult(result)
+            carbonFootprintStore.setResult(result)
+            carbonFootprintStore.setMessage(message)
             carbonFootprintStore.addToHistory(userEmail)
+
+            const newCarbonFootprint = {
+                email_user: userStore.$state.user.email,
+                footprint_value: resultado.value,
+                message: message.value
+            };
+
+            axiosInstance.post('/carbonfootprint', newCarbonFootprint)
+                .then(response => {
+
+                    console.log(response.data);
+                })
+                .catch(error => {
+
+                    console.error(error);
+                });
         }
         const perguntas = ref([
             { id: 'tv', texto: 'TVs', imagem: 'https://img.freepik.com/vector-gratis/television-vintage_23-2147503075.jpg?w=740&t=st=1686869366~exp=1686869966~hmac=61c37647d50baae3d8d4371533e8d1fa1079d70bbcf52c524450a9a4da58017d', pegadaCarbonoAnual: 35 },
@@ -101,8 +131,23 @@ export default {
             { id: 'ventiladores', texto: 'Ventiladores', imagem: 'https://img.freepik.com/vector-gratis/mujer-calor-verano-dibujada-mano-fondo-ventilador_23-2149417822.jpg?size=626&ext=jpg&ga=GA1.1.795727531.1686753706&semt=sph', pegadaCarbonoAnual: 17 },
         ]);
 
+        const messages = [
+      'Separe os seus resíduos de acordo com a sua composição e coloque no respetivo contentor – o ambiente agradece.',
+      'Junte a roupa que precisa de lavar durante períodos mais longos para evitar fazer máquinas de roupa abaixo da capacidade e não fazer lavagens desnecessárias.',
+      'Não se esqueça de fechar a torneira quando não precisar da água a correr. Aplique este conselho também quando lava as mãos e os dentes.',
+      'Sempre que possível, evite deslocar-se de carro ou transportes. Explore as alternativas disponíveis na sua cidade. As bicicletas ou trotinetes elétricas são duas opções amigas do ambiente, económicas e bastante práticas.',
+      'A longo prazo, o investimento em marcas amigas do ambiente pode ser bastante benéfico para si e para o planeta.',
+      'Levar para o supermercado ou para as suas compras sacos reutilizáveis é crucial para uma redução do consumo de plástico.',
+      'Evite comprar garrafões de plástico cada vez que vai ao supermercado, se pode beber a água da torneira de sua casa.',
+      'Experimente fazer voluntariado numa organização sem fins lucrativos que se dedica à luta da preservação do ambiente, vai estar mais preparado para começar a fazer alterações nos seus hábitos diários e para espalhar a palavra aos seus amigos e família.',
+      'Pode fazer uma doação a uma instituição que apoie o ambiente e que esteja dedicada a encontrar soluções para preservar o planeta.'
+    ];
+
         const respostas = ref({});
         const resultado = ref(null);
+        // const message = ref(null);
+        const randomIndex = ref(Math.floor(Math.random() * messages.length));
+        const message = ref(messages[randomIndex.value]);
 
         const calcularPegadaCarbono = () => {
             let total = 0;
@@ -122,9 +167,27 @@ export default {
                 total += 1000;
             }
 
+            // message.value = randomMessage;
             resultado.value = total.toFixed(2);
+            randomIndex.value = generateRandomIndex(randomIndex.value);
+      message.value = messages[randomIndex.value];
 
         };
+
+        const generateRandomIndex = (currentIndex) => {
+      let newIndex = Math.floor(Math.random() * messages.length);
+      while (newIndex === currentIndex) {
+        newIndex = Math.floor(Math.random() * messages.length);
+      }
+      return newIndex;
+    };
+
+        const getRandomMessage = () => {
+
+           
+      const randomIndex = Math.floor(Math.random() * messages.length);
+      return messages[randomIndex];
+    };
 
 
         return {
@@ -132,7 +195,9 @@ export default {
             respostas,
             resultado,
             calcularPegadaCarbono,
-            saveResultToHistory
+            saveResultToHistory,
+            message,
+            resetTest
         };
     },
 };
