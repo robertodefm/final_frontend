@@ -1,10 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import SearchView from '@/views/SearchView.vue'
-import CocktailView from '@/views/CocktailView.vue'
+import ActionView from '@/views/ActionView.vue'
 import CommentsView from '@/views/CommentsView.vue'
 import ErroView from '@/views/ErroView.vue'
 import RegisterView from '@/views/RegisterView.vue'
+import CalculatorView from '@/views/CalculatorView.vue'
 import { auth } from '../firebase.js';
 
 
@@ -22,9 +23,9 @@ const router = createRouter({
       component: SearchView
     },
     {
-      path: '/cocktail',
-      name: 'cocktail',
-      component: CocktailView
+      path: '/action',
+      name: 'action',
+      component: ActionView
     },
     {
       path: '/comments',
@@ -40,6 +41,11 @@ const router = createRouter({
       path: '/register',
       name: 'register',
       component: RegisterView
+    },
+    {
+      path: '/calculator',
+      name: 'calculator',
+      component: CalculatorView
     },
     {
       path: '/:pathMatch(.*)',

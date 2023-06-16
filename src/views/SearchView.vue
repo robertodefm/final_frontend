@@ -7,13 +7,13 @@
       </div>
       <br>
       <div class="row row-cols-1 row-cols-md-3 g-4 px-5 mt-5 color">
-        <div v-for="item in lista" :key="item.idDrink" class="col">
+        <div v-for="item in lista" :key="item.id" class="col">
           <div class="card h-100 color border">
-            <img :src="item.strDrinkThumb" class="card-img-top">
+            <img :src="item.image" class="card-img-top">
             <div class="card-body">
-                <RouterLink class="card-title d-flex justify-content-center" :to="`/cocktail?id=${item.idDrink}`"
-              @click="setSelectedCocktail(item)">
-                {{ item.strDrink }}
+                <RouterLink class="card-title d-flex justify-content-center" :to="`/action?id=${item.id}`"
+              @click="setSelectedAction(item)">
+                {{ item.nome }}
               </RouterLink>
             </div>
           </div>
@@ -24,23 +24,26 @@
   
   <script setup>
   import { ref } from 'vue'
-  import { useCocktailsStore } from '@/stores/cocktailsStore.js'
+  import { useActionStore } from '@/stores/actionStore.js'
   import { useRouter, RouterLink } from 'vue-router'
   
-  const cocktailsStore = useCocktailsStore()
+  const actionStore = useActionStore()
   const router = useRouter()
   const search = ref('')
   const lista = ref([])
   
   const getLista = async (search) => {
-    const response = await fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=' + search)
-    const data = await response.json()
-    const final = data.drinks || []
-    lista.value = final
-  }
+  const response = await fetch(`https://umacarbono-default-rtdb.firebaseio.com/acoes.json?orderBy="categoria"&equalTo="${search}"`);
+  const data = await response.json();
+  const final = data || [];
+  lista.value = final;
+};
+
+
+
   
-  const setSelectedCocktail = (cocktail) => {
-  cocktailsStore.setSelectedCocktail(cocktail)
+  const setSelectedAction = (action) => {
+  actionStore.setSelectedActionId(action)
 }
 
   </script>

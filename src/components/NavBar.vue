@@ -13,7 +13,7 @@
                         <RouterLink to="/search" class="nav-link  color" aria-current="page">Search</RouterLink>
                     </li>
                     <li class="nav-item ">
-                        <RouterLink to="/cocktail" class="nav-link color">Cocktail</RouterLink>
+                        <RouterLink to="/action" class="nav-link color">Action</RouterLink>
                     </li>
                     <li class="nav-item ">
                         <RouterLink to="/comments" class="nav-link color">Reviews</RouterLink>
