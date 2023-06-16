@@ -26,6 +26,11 @@
                         <RouterLink to="/calculator" class="nav-link color">Calculator
                         </RouterLink>
                     </li>
+                    <li v-if="user?.email === 'admin@gmail.com'">
+
+                        <RouterLink to="/admin" class="nav-link color">Admin
+                        </RouterLink>
+                    </li>
                     <li class="ms-5 fs-6 border ">
                         <form action="" class="darkmode">
                             <fieldset>
@@ -39,19 +44,20 @@
                         </form>
                     </li>
                 </ul>
-                <form class="grid column-gap-3 d-flex" role="search" >
-                    <span class="d-flex align-items-center">{{user?.email}}</span>
-                    <RouterLink to="/" class="g-col-6 btn  btn-dark logged-in align-items-center d-flex" id="logout" v-if="user" @click="logout">Logout</RouterLink>
+                <form class="grid column-gap-3 d-flex" role="search">
+                    <span class="d-flex align-items-center">{{ user?.email }}</span>
+                    <RouterLink to="/" class="g-col-6 btn  btn-dark logged-in align-items-center d-flex" id="logout"
+                        v-if="user" @click="logout">Logout</RouterLink>
                     <div v-else>
                         <button class="g-col-6 btn  btn-dark logged-out" type="button" data-bs-toggle="modal"
                             data-bs-target="#exampleModal">Login</button>
-    
+
                         <RouterLink to="/register" class="g-col-6 btn  btn-light logged-out">Register</RouterLink>
 
                     </div>
 
 
-                
+
                 </form>
             </div>
         </div>
@@ -68,31 +74,31 @@ import { useUserStore } from '@/stores/usersStore.js'
 const userStore = useUserStore()
 
 const toggleDarkMode = (darkMode) => {
-      userStore.toggleDarkMode(darkMode)
-    }
+    userStore.toggleDarkMode(darkMode)
+}
 
 const router = useRouter();
 
-const auth = getAuth(); // Obtén la instancia de autenticación
+const auth = getAuth(); 
 
 
 const user = ref(null);
 
 const logout = () => {
-  auth.signOut().then(() => {
-    router.push({ name: 'home' });
-  });
+    auth.signOut().then(() => {
+        router.push({ name: 'home' });
+    });
 };
 
 onMounted(() => {
-  onAuthStateChanged(auth, (currentUser) => {
-    if (currentUser) {
-      user.value = currentUser;
-      userStore.login(currentUser);
-    } else {
-      user.value = null;
-      userStore.logout();
-    }
-  });
+    onAuthStateChanged(auth, (currentUser) => {
+        if (currentUser) {
+            user.value = currentUser;
+            userStore.login(currentUser);
+        } else {
+            user.value = null;
+            userStore.logout();
+        }
+    });
 });
 </script>

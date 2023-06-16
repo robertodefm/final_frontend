@@ -6,6 +6,7 @@ import CommentsView from '@/views/CommentsView.vue'
 import ErroView from '@/views/ErroView.vue'
 import RegisterView from '@/views/RegisterView.vue'
 import CalculatorView from '@/views/CalculatorView.vue'
+import AdminView from '@/views/AdminView.vue'
 import { auth } from '../firebase.js';
 
 
@@ -49,6 +50,14 @@ const router = createRouter({
       meta: {
         requiresAuth: true
       }
+    },{
+      path: '/admin',
+      name: 'admin',
+      component: AdminView,
+      meta: {
+        requiresAdmin: true
+      }
+      
     },
     {
       path: '/:pathMatch(.*)',
@@ -58,19 +67,25 @@ const router = createRouter({
   ]
 });
 
-router.beforeEach((to,from,next) => {
-  if (to.matched.some(route => route.meta.requiresAuth)) {
-    const user = auth.currentUser;
-    if (user){
-      next()
-    } else {
-      next({
-        name: 'register'
-      })
-    }
-  }else {
+
+
+
+router.beforeEach((to, from, next) => {
+  const requiresAuth = to.matched.some(route => route.meta.requiresAuth);
+  const requiresAdmin = to.matched.some(route => route.meta.requiresAdmin);
+  const user = auth.currentUser;
+
+  if (requiresAuth && !user) {
+    next({ name: 'register' });
+  } else if (requiresAdmin && (!user || user.email !== 'admin@gmail.com')) {
+    console.log(auth.currentUser)
+    next({ name: 'home' });
+  } else {
     next();
   }
-})
+});
+
+
+
 
 export default router
